@@ -20,10 +20,10 @@ SPM: https://github.com/boulomiel/StickyHeader
   - letfNavButton : Leading navigation button. Gives current scroll position. (<b>default: EmptyView()</b>).
   - rightNavButton : Trailing navigation button. Gives current scroll position. (<b>default: EmptyView()</b>).
   - scrollBackground: ScrollView background.  Gives current scroll position. (<b>default: EmptyView()</b>).
-  - 
+    
 ## Notes:
 - iOS : <b>.v16</b>
-- The content already being a <b>ScrollView</b>, scrollBody can add views in a list only with <b>ForEach</b>.
+- The content already being a <b>ScrollView</b>, scrollBody can add views in a "list manner" only with <b>ForEach</b>, otherwise add views sequentially.
 
 # Implementation:
 
