@@ -35,7 +35,6 @@ public struct StickyHeaderView <
     RightNav: View>: View {
     
     let headerDirection: HeaderDirection
-    var screenRatioHeaderHeight: CGFloat
     var header: (CGFloat, CGSize) -> Header
     var TitleView: (CGFloat) -> Title
     var Scroll: (CGFloat) -> ScrollBody
@@ -58,7 +57,7 @@ public struct StickyHeaderView <
         
     public init(
          headerDirection: HeaderDirection = .leading,
-         screenRationHeaderHeight: CGFloat = 0.3,
+         maxHeaderHeight: CGFloat = 200,
          @ViewBuilder header: @escaping (CGFloat, CGSize) -> Header,
          @ViewBuilder title: @escaping (CGFloat) -> Title = { _ in EmptyView() },
          @ViewBuilder scrollBody: @escaping (CGFloat) -> ScrollBody,
@@ -67,7 +66,7 @@ public struct StickyHeaderView <
          @ViewBuilder rightNavButton: @escaping (CGFloat) -> RightNav = {_ in EmptyView()},
          @ViewBuilder scrollBackground: @escaping (CGFloat) -> ScrollBackground = {_ in EmptyView()}
     ) {
-        self.screenRatioHeaderHeight = screenRationHeaderHeight
+        self.headerHeight = maxHeaderHeight
         self.header = header
         self.Scroll = scrollBody
         self.TitleView = title
@@ -95,9 +94,6 @@ public struct StickyHeaderView <
                         } onDraggingEnd: { offset, velocity, scrollSize in
                         }
                     }
-                }
-                .onAppear {
-                    headerHeight = size.height * screenRatioHeaderHeight
                 }
             }
             .background {
@@ -140,8 +136,8 @@ public struct StickyHeaderView <
                             }
                             .opacity(headerDirection == .center ? 1 - progress : 1)
                     }
-                    .frame(width: headerHeight * screenRatioHeaderHeight,
-                           height: headerHeight * screenRatioHeaderHeight)
+                    .frame(width: headerHeight * 0.3,
+                           height: headerHeight * 0.3)
                     
                     TitleView(progress)
                         .scaleEffect(1 - min(0.15, progress))
@@ -151,6 +147,8 @@ public struct StickyHeaderView <
             .frame(height: updatingHeaderHeight,
                    alignment: .bottom)
             .offset(y:-offsetY)
+            .offset(y:8)
+
         }
         .frame(height: headerHeight)
     }
